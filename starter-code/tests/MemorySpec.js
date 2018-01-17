@@ -69,6 +69,7 @@ describe('shuffleCard method', function () {
 });
 
 describe('checkIfPair method', function () {
+  
   it('Should be declare', function () {
     expect(typeof memoryGame.checkIfPair).toBe('function');
   });
@@ -115,7 +116,7 @@ describe('finished method', function () {
   });
 
   it('It should return true if all pairs were guessed', function () {
-    memoryGame.pairsGuessed = 12;
+    memoryGame.pairsGuessed = 4;
     expect(memoryGame.finished()).toBe(true);
   });
 
