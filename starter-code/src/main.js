@@ -45,22 +45,29 @@ $(document).ready(function(){
   document.getElementById('memory_board').innerHTML = html;
 
   // Bind the click event of each element to a function
-  $('.back').on('click', function () {
+  $('.back').on('click', function (event) {
 
     var $that = $(this);
-    var currentCard = $(this).attr('name');
-    memoryGame.pickedCards.push(currentCard) ;
-    var firstCard = memoryGame.pickedCards[0];
-    var secondCard = memoryGame.pickedCards[1];
-    $(this).hide();
-    $(this).next().show();
-    if(memoryGame.pickedCards.length === 2){
+    
+    if(memoryGame.pickedCards.length < 2) {
 
+      var currentCard = $(this).attr('name');
+      memoryGame.pickedCards.push(this) ;
+      $(this).hide();
+      $(this).next().show();
+
+    }
+    else if(memoryGame.pickedCards.length === 2){
+      
+      var $firstCard = $(memoryGame.pickedCards[0]);
+      var $secondCard = $(memoryGame.pickedCards[1]);
+      var $firstCardName = $firstCard.attr('name');
+      var $secondCardName = $secondCard.attr('name');
       //Score Pairs Clicked
       var scorePairsClicked = memoryGame.pairsClicked + 1 ;
       $('#pairs_clicked').html(scorePairsClicked);
 
-      if(memoryGame.checkIfPair(firstCard, secondCard)){
+      if(memoryGame.checkIfPair($firstCardName, $secondCardName)){
 
         //Score Pairs Guessed
         var scorePairsGuessed = memoryGame.pairsGuessed;
@@ -70,17 +77,16 @@ $(document).ready(function(){
       }
       else{
         
-        setTimeout(function () {
-          $that.show();
-          $that.next().hide();
-          $("[name = '" + firstCard + "']").next().hide();
-          $("[name = '" + firstCard + "']").show();
-        }, 1000);
+        // setTimeout(function () {
+          $firstCard.show();
+          $firstCard.next().hide();
+          $secondCard.show();
+          $secondCard.next().hide();
+          memoryGame.pickedCards = [];
+        // }, 800);
         
-        memoryGame.pickedCards = [];
       }
     }
     memoryGame.finished();
   });
 });
-
