@@ -41,6 +41,7 @@ MemoryGame.prototype.finished = function () {
     return false;
   }
   else if(this.pairsGuessed === numberPairs){
+    alert("You win!")
     return true;
   }
   else {
